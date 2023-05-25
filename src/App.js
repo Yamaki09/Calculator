@@ -1,5 +1,6 @@
 import "./App.css";
 import React, { useState } from "react";
+import BigInt from "big-integer";
 
 function App() {
 	let [result, setResult] = useState("0");
@@ -22,7 +23,10 @@ function App() {
 
 	const methods = {
 		add: (a, b) => {
-			return Number(a) + Number(b);
+			let sum1 = BigInt(a);
+			let sum2 = BigInt(b);
+			let total = sum1 + sum2;
+			return total.toString();
 		},
 		subtract: (a, b) => {
 			return Number(a) - Number(b);
@@ -72,6 +76,30 @@ function App() {
 			setNumber("0");
 		}
 	};
+
+	// still need to improve
+	let shouldProcessEvent = true;
+
+	function handleKeyDown(event) {
+		if (!shouldProcessEvent || isNaN(event.key)) {
+			return;
+		}
+		shouldProcessEvent = false;
+		setTimeout(() => {
+			shouldProcessEvent = true;
+		}, 100);
+		if (result === "0" && !isCalculate) {
+			setResult(event.key);
+		} else if (result !== "0" && !isCalculate) {
+			setResult((result += event.key));
+		}
+		if (number === "0" && isCalculate) {
+			setNumber(event.key);
+		} else if (number !== "0" && isCalculate) {
+			setNumber((number += event.key));
+		}
+	}
+	document.addEventListener("keydown", handleKeyDown);
 
 	return (
 		<>
