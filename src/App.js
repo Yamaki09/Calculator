@@ -38,6 +38,8 @@ function App() {
 	const showSecondInput = () => {
 		if (!isCalculate) {
 			return <h4 id="display">{result}</h4>;
+		} else if (isCalculate && result !== "0" && number === "0") {
+			return <h4 id="display">{result}</h4>;
 		} else {
 			return <h4 id="display">{number}</h4>;
 		}
@@ -48,6 +50,26 @@ function App() {
 			return false;
 		} else {
 			return true;
+		}
+	};
+
+	const getTotal = (result, number, operand) => {
+		if (operand === "+") {
+			setResult(methods.add(result, number));
+			setIsCalculate(false);
+			setNumber("0");
+		} else if (operand === "-") {
+			setResult(methods.subtract(result, number));
+			setIsCalculate(false);
+			setNumber("0");
+		} else if (operand === "*") {
+			setResult(methods.multiply(result, number));
+			setIsCalculate(false);
+			setNumber("0");
+		} else if (operand === "/") {
+			setResult(methods.divide(result, number));
+			setIsCalculate(false);
+			setNumber("0");
 		}
 	};
 
@@ -86,8 +108,14 @@ function App() {
 					<button
 						className="button"
 						onClick={() => {
-							setIsCalculate(true);
-							setOperator("/");
+							if (isCalculate) {
+								getTotal(result, number, operator);
+								setIsCalculate(true);
+								setOperator("/");
+							} else {
+								setIsCalculate(true);
+								setOperator("/");
+							}
 						}}
 					>
 						/
@@ -123,8 +151,14 @@ function App() {
 					<button
 						className="button"
 						onClick={() => {
-							setIsCalculate(true);
-							setOperator("*");
+							if (isCalculate) {
+								getTotal(result, number, operator);
+								setIsCalculate(true);
+								setOperator("*");
+							} else {
+								setIsCalculate(true);
+								setOperator("*");
+							}
 						}}
 					>
 						*
@@ -160,8 +194,14 @@ function App() {
 					<button
 						className="button"
 						onClick={() => {
-							setIsCalculate(true);
-							setOperator("-");
+							if (isCalculate) {
+								getTotal(result, number, operator);
+								setIsCalculate(true);
+								setOperator("-");
+							} else {
+								setIsCalculate(true);
+								setOperator("-");
+							}
 						}}
 					>
 						-
@@ -216,8 +256,14 @@ function App() {
 					<button
 						className="button"
 						onClick={() => {
-							setIsCalculate(true);
-							setOperator("+");
+							if (isCalculate) {
+								getTotal(result, number, operator);
+								setIsCalculate(true);
+								setOperator("+");
+							} else {
+								setIsCalculate(true);
+								setOperator("+");
+							}
 						}}
 					>
 						+
@@ -226,23 +272,7 @@ function App() {
 					<button
 						className="button"
 						onClick={() => {
-							if (operator === "+") {
-								setResult(methods.add(result, number));
-								setIsCalculate(false);
-								setNumber("0");
-							} else if (operator === "-") {
-								setResult(methods.subtract(result, number));
-								setIsCalculate(false);
-								setNumber("0");
-							} else if (operator === "*") {
-								setResult(methods.multiply(result, number));
-								setIsCalculate(false);
-								setNumber("0");
-							} else if (operator === "/") {
-								setResult(methods.divide(result, number));
-								setIsCalculate(false);
-								setNumber("0");
-							}
+							getTotal(result, number, operator);
 						}}
 					>
 						=
