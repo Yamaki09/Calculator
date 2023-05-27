@@ -77,6 +77,25 @@ function App() {
 		}
 	};
 
+	const deleteMistake = () => {
+		let currentInput = "";
+		if (!isCalculate && result !== "0" && result.length === 1) {
+			setResult("0");
+		} else if (!isCalculate && result.length > 1) {
+			currentInput = result;
+			let tmp = currentInput.slice(0, result.length - 1);
+			currentInput = tmp;
+			setResult(currentInput);
+		} else if (isCalculate && number !== "0" && number.length === 1) {
+			setNumber("0");
+		} else if (isCalculate && number.length > 1) {
+			currentInput = number;
+			let tmp = currentInput.slice(0, number.length - 1);
+			currentInput = tmp;
+			setNumber(currentInput);
+		}
+	};
+
 	// still need to improve
 	let shouldProcessEvent = true;
 
@@ -147,6 +166,14 @@ function App() {
 						}}
 					>
 						/
+					</button>
+					<button
+						className="button del"
+						onClick={() => {
+							deleteMistake();
+						}}
+					>
+						⇐
 					</button>
 					<br />
 					<button
