@@ -1,12 +1,32 @@
 import "./App.css";
 import React, { useState } from "react";
-import BigInt from "big-integer";
+// import BigInt from "big-integer";
 
 function App() {
 	let [result, setResult] = useState("0");
 	let [number, setNumber] = useState("0");
 	let [operator, setOperator] = useState("");
 	const [isCalculate, setIsCalculate] = useState(false);
+
+	const methods = {
+		add: (a, b) => {
+			console.log(`this is a: ${a}`);
+			console.log(`this is b: ${b}`);
+			let sum = Number(a) + Number(b);
+			return sum.toString();
+		},
+		subtract: (a, b) => {
+			console.log(`this is a: ${a}`);
+			console.log(`this is b: ${b}`);
+			return Number(a) - Number(b);
+		},
+		multiply: (a, b) => {
+			return Number(a) * Number(b);
+		},
+		divide: (a, b) => {
+			return Number(a) / Number(b);
+		},
+	};
 
 	const buttonClicked = (input) => {
 		if (result === "0" && !isCalculate) {
@@ -19,24 +39,6 @@ function App() {
 		} else if (number !== "0" && isCalculate) {
 			setNumber((number += input));
 		}
-	};
-
-	const methods = {
-		add: (a, b) => {
-			let sum1 = BigInt(a);
-			let sum2 = BigInt(b);
-			let total = sum1 + sum2;
-			return total.toString();
-		},
-		subtract: (a, b) => {
-			return Number(a) - Number(b);
-		},
-		multiply: (a, b) => {
-			return Number(a) * Number(b);
-		},
-		divide: (a, b) => {
-			return Number(a) / Number(b);
-		},
 	};
 
 	const showSecondInput = () => {
@@ -87,7 +89,7 @@ function App() {
 			currentInput = tmp;
 			setResult(currentInput);
 		} else if (isCalculate && number !== "0" && number.length === 1) {
-			setNumber("0");
+			alert("please try again from the top");
 		} else if (isCalculate && number.length > 1) {
 			currentInput = number;
 			let tmp = currentInput.slice(0, number.length - 1);
@@ -100,25 +102,25 @@ function App() {
 	let shouldProcessEvent = true;
 
 	function handleKeyDown(event) {
-		if (!shouldProcessEvent || isNaN(event.key)) {
+		// event.preventDefault();
+		console.log(event.key);
+
+		if (!shouldProcessEvent) {
 			return;
 		}
 		shouldProcessEvent = false;
-		setTimeout(() => {
-			shouldProcessEvent = true;
-		}, 100);
-		if (result === "0" && !isCalculate) {
-			setResult(event.key);
-		} else if (result !== "0" && !isCalculate) {
-			setResult((result += event.key));
+		if (event.key === "Backspace") {
+			deleteMistake();
+			return;
 		}
-		if (number === "0" && isCalculate) {
-			setNumber(event.key);
-		} else if (number !== "0" && isCalculate) {
-			setNumber((number += event.key));
-		}
+		if (isNaN(event.key)) return;
+		let num = event.key;
+		buttonClicked(num);
 	}
-	document.addEventListener("keydown", handleKeyDown);
+	setTimeout(() => {
+		document.addEventListener("keydown", handleKeyDown);
+		shouldProcessEvent = true;
+	}, 1);
 
 	return (
 		<>
