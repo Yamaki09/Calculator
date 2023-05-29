@@ -93,13 +93,14 @@ function App() {
 			let tmp = currentInput.slice(0, result.length - 1);
 			currentInput = tmp;
 			setResult(currentInput);
-		} else if (isCalculate && number !== "0" && number.length === 1) {
-			alert("please try again from the top");
 		} else if (isCalculate && number.length > 1) {
 			currentInput = number;
 			let tmp = currentInput.slice(0, number.length - 1);
 			currentInput = tmp;
 			setNumber(currentInput);
+		} else {
+			alert("please try again");
+			window.location.reload();
 		}
 	};
 
