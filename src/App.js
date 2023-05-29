@@ -29,15 +29,18 @@ function App() {
 	};
 
 	const buttonClicked = (input) => {
-		if (result === "0" && !isCalculate) {
-			setResult(input);
-		} else if (result !== "0" && !isCalculate) {
-			setResult((result += input));
-		}
-		if (number === "0" && isCalculate) {
-			setNumber(input);
-		} else if (number !== "0" && isCalculate) {
-			setNumber((number += input));
+		if (!isCalculate) {
+			if (result === "0") {
+				setResult(input);
+			} else if (result !== "0") {
+				setResult((result += input));
+			}
+		} else {
+			if (number === "0" && isCalculate) {
+				setNumber(input);
+			} else if (number !== "0" && isCalculate) {
+				setNumber((number += input));
+			}
 		}
 	};
 
@@ -47,6 +50,8 @@ function App() {
 		} else if (isCalculate && result !== "0" && number === "0") {
 			return <h4 id="display">{result}</h4>;
 		} else {
+			console.log(`this is result when isCalcu is true ${result}`);
+			console.log(`this is num ${number}`);
 			return <h4 id="display">{number}</h4>;
 		}
 	};
@@ -98,29 +103,43 @@ function App() {
 		}
 	};
 
-	// still need to improve
-	let shouldProcessEvent = true;
+	// // still need to improve
+	// let shouldProcessEvent = true;
 
-	function handleKeyDown(event) {
-		// event.preventDefault();
-		console.log(event.key);
+	// function handleKeyDown(event) {
+	// 	event.preventDefault();
+	// 	console.log(event.key);
 
-		if (!shouldProcessEvent) {
-			return;
-		}
-		shouldProcessEvent = false;
-		if (event.key === "Backspace") {
-			deleteMistake();
-			return;
-		}
-		if (isNaN(event.key)) return;
-		let num = event.key;
-		buttonClicked(num);
-	}
-	setTimeout(() => {
-		document.addEventListener("keydown", handleKeyDown);
-		shouldProcessEvent = true;
-	}, 1);
+	// 	if (!shouldProcessEvent) return;
+
+	// 	if (isNaN(event.key)) return;
+
+	// 	shouldProcessEvent = false;
+
+	// 	if (event.key === "Backspace") {
+	// 		deleteMistake();
+	// 		return;
+	// 	} else if (
+	// 		event.key === "+" ||
+	// 		event.key === "-" ||
+	// 		event.key === "*" ||
+	// 		event.key === "/"
+	// 	) {
+	// 		setIsCalculate(true);
+	// 		setOperator(event.key);
+	// 	}
+
+	// 	let num = event.key;
+	// 	buttonClicked(num);
+
+	// 	// let num = event.key;
+	// 	// buttonClicked(num);
+	// 	// setTimeout(() => {
+	// 	// 	shouldProcessEvent = true;
+	// 	// }, 100);
+	// 	shouldProcessEvent = true;
+	// }
+	// document.addEventListener("keydown", handleKeyDown);
 
 	return (
 		<>
